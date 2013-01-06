@@ -1,4 +1,4 @@
-require 'rubame'
+require 'spec_helper'
 
 describe Rubame::Server do
   it 'should create a new server' do

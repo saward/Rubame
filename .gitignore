@@ -15,6 +15,7 @@
 
 *.gem
 test_fiddle.rb
+Gemfile.lock
 
 # OS generated files #
 ######################
