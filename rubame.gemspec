@@ -9,4 +9,6 @@ Gem::Specification.new do |s|
   s.files       = ["lib/rubame.rb"]
   s.homepage    =
     'http://github.com/saward/Rubame'
+
+  s.add_dependency 'websocket', '~> 1.0'
 end
