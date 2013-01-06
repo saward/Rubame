@@ -1,0 +1,28 @@
+# Editors #
+###########
+*.sublime-workspace
+*.*~
+*.texpadtmp
+
+# Citadels #
+############
+
+*.log
+*.dat
+
+# Project specific #
+####################
+
+*.gem
+test_fiddle.rb
+
+# OS generated files #
+######################
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Icon?
+ehthumbs.db
+Thumbs.db
