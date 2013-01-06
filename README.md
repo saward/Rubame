@@ -30,6 +30,12 @@ while true
 end
 ```
 
+A useful Chrome plugin to help test connections is this [Simple Websocket Client](https://chrome.google.com/webstore/detail/simple-websocket-client/pfdhoblngboilpfeibdedpjgfnlcodoo).
+
+## Possible Future Features
+
+* Currently, Rubame only deals with text network traffic.  This is not ideal, and so I hope to add the ability to send binary data, along with examples here showing how to communicate with a javascript client.
+
 ## RSpec
 
 The RSpec is quite incomplete for now.  I expect to add more tests later.
