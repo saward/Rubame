@@ -8,7 +8,6 @@ Rubame makes use of [WebSocket Ruby](https://github.com/imanel/websocket-ruby) t
 
 I am by no means a Ruby expert, so I expect there to be many ways I could improve this.  I also expect there are ways I have done this that will make someone proficient in Ruby cringe.  If you have such comments, please [email me](mailto:me@marksaward.com).  I also expect to improve the code as my project progresses, and my needs grow.  However, I will keep improvements to only be those that are of general use, and not specific to my project.
 
-
 ## Example Use
 
 ```ruby
