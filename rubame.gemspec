@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = 'rubame'
-  s.version     = '0.0.2'
+  s.version     = '0.0.3'
   s.date        = '2013-01-07'
   s.summary     = "Rubame"
   s.description = "Ruby Websocket Game Server"

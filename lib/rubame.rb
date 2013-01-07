@@ -73,7 +73,7 @@ module Rubame
       client.closed = true
     end
 
-    def run(&blk)
+    def run(time = 0, &blk)
       readable, writable = IO.select(@reading, @writing, nil, 0)
 
       if readable
@@ -89,6 +89,16 @@ module Rubame
           blk.call(client) if client and blk
         end
       end
+
+      # Check for lazy send items
+      timer_start = Time.now
+      time_passed = 0
+      begin
+        @clients.each do |s, c|
+          c.send_some_lazy(5)
+        end
+        time_passed = Time.now - timer_start
+      end while time_passed < time
     end
 
     def stop
@@ -105,6 +115,7 @@ module Rubame
       @frame = WebSocket::Frame::Incoming::Server.new(:version => @handshake.version)
       @opened = false
       @messaged = []
+      @lazy_queue = []
       @closed = false
       @server = server
     end
@@ -120,6 +131,19 @@ module Rubame
         @socket.flush
       rescue
         @server.close(self) unless @closed
+      end
+    end
+
+    def lazy_send(data)
+      @lazy_queue.push data
+    end
+
+    def send_some_lazy(count)
+      if @lazy_queue.size > 0
+        to_send = @lazy_queue.slice!(0,count)
+        to_send.each do |data|
+          send(data)
+        end
       end
     end
 
