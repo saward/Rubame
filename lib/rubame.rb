@@ -64,7 +64,6 @@ module Rubame
     end
 
     def close(client)
-      puts "Closing socket"
       @reading.delete client.socket
       @clients.delete client.socket
       begin
