@@ -21,6 +21,7 @@ while true
     end
     client.onmessage do |mess|
       puts "Server reports:  message received: #{mess}"
+      client.send "You sent me #{mess}"
     end
     client.onclose do
       puts "Server reports:  client closed"
@@ -31,9 +32,12 @@ end
 
 A useful Chrome plugin to help test connections is this [Simple Websocket Client](https://chrome.google.com/webstore/detail/simple-websocket-client/pfdhoblngboilpfeibdedpjgfnlcodoo).
 
+Each time the loop is run, it checks with ruby IO to see if any sockets have any new data.  It then reads up to (currently) 2000 bytes from that socket.  If there is more data than that waiting, it will have to wait until the next time the loop is called.  Once enough data has been received for a complete frame, that frame will be read and returned as a message, via client.onmessage as seen in the example.
+
 ## Possible Future Features
 
-* Currently, Rubame only deals with text network traffic.  This is not ideal, and so I hope to add the ability to send binary data, along with examples here showing how to communicate with a javascript client.
+* Binary data - Currently, Rubame only deals with text network traffic.  This is not ideal, and so I hope to add the ability to send binary data, along with examples here showing how to communicate with a javascript client.
+* Lazy send - Currently, Rubame sends a message as soon as the message is requested to be sent.  Sometimes, a game may want to send some traffic whenever it is convenient, and some traffic immediately.  I may add the ability to lazy send data.
 
 ## RSpec
 
