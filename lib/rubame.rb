@@ -1,5 +1,6 @@
 require 'websocket'
 require 'socket'
+require 'fiber'
 
 module Rubame
   class Server
@@ -116,6 +117,7 @@ module Rubame
       @opened = false
       @messaged = []
       @lazy_queue = []
+      @lazy_current_queue = nil
       @closed = false
       @server = server
     end
@@ -138,13 +140,34 @@ module Rubame
       @lazy_queue.push data
     end
 
-    def send_some_lazy(count)
-      if @lazy_queue.size > 0
-        to_send = @lazy_queue.slice!(0,count)
-        to_send.each do |data|
-          send(data)
+    def get_lazy_fiber
+      # Create the fiber if needed
+      if @lazy_fiber == nil or !@lazy_fiber.alive?
+        @lazy_fiber = Fiber.new do
+          @lazy_current_queue.each do |data|
+            send(data)
+            Fiber.yield unless @lazy_current_queue[-1] == data
+          end
         end
       end
+
+      return @lazy_fiber
+    end
+
+    def send_some_lazy(count)
+      # To save on cpu cycles, we don't want to be chopping and changing arrays, which could get quite large.  Instead,
+      # we iterate over an array which we are sure won't change out from underneath us.
+      unless @lazy_current_queue
+        @lazy_current_queue = @lazy_queue
+        @lazy_queue = []
+      end
+
+      completed = 0
+      begin
+        get_lazy_fiber.resume
+        completed += 1
+      end while (@lazy_queue.count > 0 or @lazy_current_queue.count > 0) and completed < count
+
     end
 
     def onopen(&blk)
