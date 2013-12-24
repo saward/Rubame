@@ -39,6 +39,8 @@ Each time the loop is run, it checks with ruby IO to see if any sockets have any
 * Binary data - Currently, Rubame only deals with text network traffic.  This is not ideal, and so I hope to add the ability to send binary data, along with examples here showing how to communicate with a javascript client.
 * Lazy send - Currently, Rubame sends a message as soon as the message is requested to be sent.  Sometimes, a game may want to send some traffic whenever it is convenient, and some traffic immediately.  I may add the ability to lazy send data.
 
+__Please Note:__ The lazy send code currently is broken, so do not use it!
+
 ## RSpec
 
 The RSpec is quite incomplete for now.  I expect to add more tests later.
