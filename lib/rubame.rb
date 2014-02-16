@@ -23,7 +23,7 @@ module Rubame
       @reading.push socket
       handshake = WebSocket::Handshake::Server.new
       client = Rubame::Client.new(socket, handshake, self)
-      
+
       while line = socket.gets
         client.handshake << line
         break if client.handshake.finished?
@@ -57,7 +57,7 @@ module Rubame
             messages.push f
           end
         end
-        
+
       end
 
       return messages
@@ -75,7 +75,7 @@ module Rubame
     end
 
     def run(time = 0, &blk)
-      readable, writable = IO.select(@reading, @writing, nil, 0)
+      readable, writable = IO.select(@reading, @writing)
 
       if readable
         readable.each do |socket|
